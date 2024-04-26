@@ -1,5 +1,9 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +21,8 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Pacifico', // Apply 'Pacifico' font as the default for the app
       ),
-      home: const LoginScreen() ,
+      // Set the initial route to SplashScreen
+      home: SplashScreen(), // Ensure SplashScreen is defined in splash_screen.dart
     );
   }
 }
