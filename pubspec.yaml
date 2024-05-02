@@ -65,6 +65,7 @@ flutter:
   assets:
      - images/login_background.png
      - images/water_rider_logo.png
+     - images/Signup_background.png
 
 
 

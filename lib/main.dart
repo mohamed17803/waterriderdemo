@@ -1,28 +1,35 @@
 // ignore_for_file: unused_import
 
+// Importing necessary Flutter material components.
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/splash_screen.dart';
+// Importing the sign-up screen used in the application.
+import 'screens/signup_screen.dart';
 
-
+// The main function is the entry point of the Flutter application.
 void main() {
   runApp(const MyApp());
 }
 
+// MyApp is the root widget of the application.
 class MyApp extends StatelessWidget {
-  const MyApp({super.key}); 
+  // Constructor for MyApp with a key parameter.
+  const MyApp({super.key});
 
   @override
+  // The build method describes the part of the user interface represented by this widget.
   Widget build(BuildContext context) {
     return MaterialApp(
+      // The title of the application, shown in the task manager.
       title: 'Water Riders',
+      // ThemeData allows defining the theme of the application.
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Pacifico', // Apply 'Pacifico' font as the default for the app
+        // Setting a custom font for the entire application.
+        fontFamily: 'Pacifico',
       ),
-      // Set the initial route to SplashScreen
-      home: SplashScreen(), // Ensure SplashScreen is defined in splash_screen.dart
+      // The initial route that the app will display on startup.
+      home: const SignUpScreen(), // Set SignUpScreen as the home route
     );
   }
 }
