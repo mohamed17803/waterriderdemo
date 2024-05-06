@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
-                          fontSize: 42.0,
+                          fontSize: 41.0,
                           color: Colors.white,
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
