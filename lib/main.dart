@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(), // Ensure SplashScreen is defined in splash_screen.dart
       // Named routes allow for easy navigation throughout the app.
       routes: {
-        // Defining the route for the login screen.
+        // Defining the route for the Login screen.
         '/login': (context) => const LoginScreen(),
-        // Defining the route for the sign-up screen.
+        // Defining the route for the Sign-up screen.
         '/signup': (context) => const SignUpScreen(),
       },
       // The onGenerateRoute function is called when navigating to a named route.
