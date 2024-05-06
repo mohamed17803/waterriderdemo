@@ -2,8 +2,11 @@
 
 // Importing necessary Flutter material components.
 import 'package:flutter/material.dart';
-// Importing the sign-up screen used in the application.
+// Importing screens used in the application.
+import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart';
 import 'screens/signup_screen.dart';
+
 
 // The main function is the entry point of the Flutter application.
 void main() {
@@ -29,7 +32,30 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Pacifico',
       ),
       // The initial route that the app will display on startup.
-      home: const SignUpScreen(), // Set SignUpScreen as the home route
+      home: const SplashScreen(), // Ensure SplashScreen is defined in splash_screen.dart
+      // Named routes allow for easy navigation throughout the app.
+      routes: {
+        // Defining the route for the login screen.
+        '/login': (context) => const LoginScreen(),
+        // Defining the route for the sign-up screen.
+        '/signup': (context) => const SignUpScreen(),
+      },
+      // The onGenerateRoute function is called when navigating to a named route.
+      onGenerateRoute: (settings) {
+        // If the route name is '/signup', navigate to the SignUpScreen.
+        if (settings.name == '/signup') {
+          return MaterialPageRoute(
+            builder: (context) {
+              return SignUpScreen(onSignUpComplete: () {
+                // After signing up, navigate to the LoginScreen.
+                Navigator.pushReplacementNamed(context, '/login');
+              });
+            },
+          );
+        }
+        // Return null for any other routes not defined here.
+        return null;
+      },
     );
   }
 }
