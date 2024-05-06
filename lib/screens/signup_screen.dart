@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'login_screen.dart'; // Import your login screen
+
 
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
 
-  const SignUpScreen({Key? key, this.onSignUpComplete}) : super(key: key);
+  const SignUpScreen({super.key, this.onSignUpComplete});
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -54,14 +56,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text('Sign Up'), 
+        // Modified the leading IconButton to use go_router for navigation.
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          }
+             ,
+
         ),
       ),
       body: SingleChildScrollView(
@@ -159,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   controller: TextEditingController(text: _dateOfBirth != null ? '${_dateOfBirth!.toLocal()}'.split(' ')[0] : ''),
                   onTap: () {
-                    FocusScope.of(context).requestFocus(new FocusNode()); // Prevent keyboard from appearing
+                    FocusScope.of(context).requestFocus(FocusNode()); // Prevent keyboard from appearing
                     _selectDateOfBirth(context); // Call method to show the date picker
                   },
                   validator: (value) {

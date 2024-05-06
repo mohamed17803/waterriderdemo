@@ -55,7 +55,10 @@ class MyApp extends StatelessWidget {
         }
         // Return null for any other routes not defined here.
         return null;
+
       },
+      // Setting debugShowCheckedModeBanner to false removes the debug banner
+      debugShowCheckedModeBanner: false,
     );
   }
 }
