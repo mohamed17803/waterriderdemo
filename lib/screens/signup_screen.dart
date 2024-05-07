@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'login_screen.dart'; // Import your login screen
@@ -59,16 +58,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     // ignore: unused_local_variable
     final size = MediaQuery.of(context).size;
 
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'), 
+        title: const Text('Sign Up'),
         // Modified the leading IconButton to use go_router for navigation.
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           }
-             ,
+          ,
 
         ),
       ),
