@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     // Use AnimatedBuilder to rebuild the widget on every animation tick
     return Container(
-      color: Colors.blue, // Set the background color to blue
+      color: Color(0xFF00B4DA), // Set the background color to blue
       child: AnimatedBuilder(
         animation: _controller,
         builder: (BuildContext context, Widget? child) {

@@ -7,7 +7,6 @@ import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/signup_screen.dart';
 
-
 // The main function is the entry point of the Flutter application.
 void main() {
   runApp(const MyApp());
