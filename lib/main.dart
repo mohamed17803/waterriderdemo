@@ -1,14 +1,19 @@
-// ignore_for_file: unused_import
-
 // Importing necessary Flutter material components.
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Importing screens used in the application.
 import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/signup_screen.dart';
+import 'firebase_options.dart';
+
 
 // The main function is the entry point of the Flutter application.
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -54,7 +59,6 @@ class MyApp extends StatelessWidget {
         }
         // Return null for any other routes not defined here.
         return null;
-
       },
       // Setting debugShowCheckedModeBanner to false removes the debug banner
       debugShowCheckedModeBanner: false,

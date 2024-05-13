@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'login_screen.dart'; // Import your login screen
-
+// Import your login screen
 
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
@@ -9,6 +7,7 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key, this.onSignUpComplete});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
