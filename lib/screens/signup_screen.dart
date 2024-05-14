@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// Import your login screen
+import 'package:firebase_auth/firebase_auth.dart';
+// Import your SignUpVerificationScreen and LoginScreen
 
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
@@ -7,7 +8,6 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key, this.onSignUpComplete});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
@@ -28,13 +28,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _onSignUp() {
+  void _onSignUp(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      // Assuming this is where your sign-up logic would go
-      // ...
-
-      // Call the onSignUpComplete callback when the sign-up process is complete
-      widget.onSignUpComplete?.call();
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        // Navigate to SignUpVerificationScreen after successful sign-up
+        Navigator.pushReplacementNamed(context, '/signupVerification');
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message ?? 'An error occurred')),
+        );
+      }
     }
   }
 
@@ -54,21 +61,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     final size = MediaQuery.of(context).size;
-
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
-        // Modified the leading IconButton to use go_router for navigation.
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
-          }
-          ,
-
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -178,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: _onSignUp,
+                  onPressed: () => _onSignUp(context),
                   child: const Text('Sign Up'),
                 ),
                 // Other UI elements (social sign-up buttons, etc.)
