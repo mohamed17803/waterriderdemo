@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         // Defining the route for the Sign-up screen.
         '/signup': (context) => const SignUpScreen(),
-        // Defining the route for the Sign-up Verification to inform the user.
+        // Defining the route for the Sign-up Verification to inform the User.
         '/signupVerification': (context) => const SignUpVerificationScreen(),
       },
       // The onGenerateRoute function is called when navigating to a named route.
