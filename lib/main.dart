@@ -7,7 +7,7 @@ import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/signup_screen.dart';
 import 'firebase_options.dart';
-
+// Added the Authentication
 // The main function is the entry point of the Flutter application.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
