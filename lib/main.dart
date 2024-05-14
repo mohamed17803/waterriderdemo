@@ -1,12 +1,12 @@
 // Importing necessary Flutter material components.
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:waterriderdemo/screens/signupverification_screen.dart';
 // Importing screens used in the application.
 import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/signup_screen.dart';
 import 'firebase_options.dart';
-
 
 // The main function is the entry point of the Flutter application.
 Future<void> main() async {
@@ -43,6 +43,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         // Defining the route for the Sign-up screen.
         '/signup': (context) => const SignUpScreen(),
+        // Defining the route for the Sign-up Verification screen.
+        '/signupVerification': (context) => const SignUpVerificationScreen(),
       },
       // The onGenerateRoute function is called when navigating to a named route.
       onGenerateRoute: (settings) {
@@ -50,9 +52,9 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/signup') {
           return MaterialPageRoute(
             builder: (context) {
-              return SignUpScreen(onSignUpComplete: () {
-                // After signing up, navigate to the LoginScreen.
-                Navigator.pushReplacementNamed(context, '/login');
+              return  SignUpScreen(onSignUpComplete: () {
+                // After signing up, navigate to the SignUpVerificationScreen.
+                Navigator.pushReplacementNamed(context, '/signupVerification');
               });
             },
           );
