@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         // Defining the route for the Sign-up Verification to inform the User.
         '/signupVerification': (context) => const SignUpVerificationScreen(),
         // Defining the route for the Home screen.
-        '/home': (context) => const HomeScreen(), // Add this line for the HomeScreen route
+        '/home': (context) => const HomeScreen(), //  HomeScreen route
       },
       // The onGenerateRoute function is called when navigating to a named route.
       onGenerateRoute: (settings) {
