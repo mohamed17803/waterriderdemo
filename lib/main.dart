@@ -1,6 +1,7 @@
 // Importing necessary Flutter material components.
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'screens/home_screen.dart';
 import 'package:waterriderdemo/screens/signupverification_screen.dart';
 // Importing screens used in the application.
 import 'screens/login_screen.dart';
@@ -40,11 +41,13 @@ class MyApp extends StatelessWidget {
       // Named routes allow for easy navigation throughout the app.
       routes: {
         // Defining the route for the Login screen.
-        '/login': (context) => const LoginScreen(),
+        '/login': (context) => LoginScreen(),
         // Defining the route for the Sign-up screen.
         '/signup': (context) => const SignUpScreen(),
         // Defining the route for the Sign-up Verification to inform the User.
         '/signupVerification': (context) => const SignUpVerificationScreen(),
+        // Defining the route for the Home screen.
+        '/home': (context) => const HomeScreen(), // Add this line for the HomeScreen route
       },
       // The onGenerateRoute function is called when navigating to a named route.
       onGenerateRoute: (settings) {
