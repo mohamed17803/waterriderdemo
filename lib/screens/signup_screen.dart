@@ -61,8 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+    // Removed the unused 'size' variable
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
@@ -166,15 +165,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     labelText: 'Date of Birth',
                     border: OutlineInputBorder(),
                   ),
-                  controller: TextEditingController(
-                      text: _dateOfBirth != null
-                          ? '${_dateOfBirth!.toLocal()}'.split(' ')[0]
-                          : ''),
+                  controller: TextEditingController(text: _dateOfBirth != null ? '${_dateOfBirth!.toLocal()}'.split(' ')[0] : ''),
                   onTap: () {
-                    FocusScope.of(context).requestFocus(
-                        FocusNode()); // Prevent keyboard from appearing
-                    _selectDateOfBirth(
-                        context); // Call method to show the date picker
+                    FocusScope.of(context).requestFocus(FocusNode()); // Prevent keyboard from appearing
+                    _selectDateOfBirth(context); // Call method to show the date picker
                   },
                   validator: (value) {
                     if (_dateOfBirth == null) {
