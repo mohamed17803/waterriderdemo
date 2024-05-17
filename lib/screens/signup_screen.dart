@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+// Here we do the Registration
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
 
@@ -64,7 +64,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: const Color(0xFF00B4DA),
       appBar: AppBar(
         title: const Text('Sign Up', style: TextStyle(color: Colors.white)),
-
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -218,7 +217,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onPressed: () => _onSignUp(context),
                   child: const Text('Sign Up', style: TextStyle(color: Colors.blue)),
                 ),
-                const SizedBox(height: 1),
+                const SizedBox(height: 20),
                 const Center(
                   child: Text(
                     'or',
