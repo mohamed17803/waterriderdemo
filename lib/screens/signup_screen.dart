@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// Import your SignUpVerificationScreen and LoginScreen
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
@@ -17,7 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _phoneController = TextEditingController();
-  DateTime? _dateOfBirth; // For storing the date of birth
+  DateTime? _dateOfBirth;
 
   @override
   void dispose() {
@@ -35,7 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        // Navigate to SignUpVerificationScreen after successful sign-up
         Navigator.pushReplacementNamed(context, '/signupVerification');
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,13 +60,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
+      backgroundColor: const Color(0xFF00B4DA),
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text('Sign Up', style: TextStyle(color: Colors.white)),
+
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -85,7 +87,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -103,7 +109,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -118,7 +128,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Confirm Password',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value != _passwordController.text) {
@@ -132,7 +146,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _phoneController,
                   decoration: const InputDecoration(
                     labelText: 'Phone Number',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -143,11 +161,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    labelText: 'Select Gender',
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
                   value: null,
-                  hint: const Text('Select Gender'),
                   onChanged: (String? newValue) {},
-                  items: <String>['Male', 'Female']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -164,12 +188,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Date of Birth',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   controller: TextEditingController(text: _dateOfBirth != null ? '${_dateOfBirth!.toLocal()}'.split(' ')[0] : ''),
                   onTap: () {
-                    FocusScope.of(context).requestFocus(FocusNode()); // Prevent keyboard from appearing
-                    _selectDateOfBirth(context); // Call method to show the date picker
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    _selectDateOfBirth(context);
                   },
                   validator: (value) {
                     if (_dateOfBirth == null) {
@@ -180,10 +208,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.blue, backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                  ),
                   onPressed: () => _onSignUp(context),
-                  child: const Text('Sign Up'),
+                  child: const Text('Sign Up', style: TextStyle(color: Colors.blue)),
                 ),
-                // Other UI elements (social sign-up buttons, etc.)
+                const SizedBox(height: 1),
+                const Center(
+                  child: Text(
+                    'or',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    'Sign Up With',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      icon: const FaIcon(FontAwesomeIcons.facebook, color: Colors.white),
+                      onPressed: () {
+                        // TODO: Implement Facebook Sign Up
+                      },
+                    ),
+                    IconButton(
+                      icon: const FaIcon(FontAwesomeIcons.google, color: Colors.white),
+                      onPressed: () {
+                        // TODO: Implement Google Sign Up
+                      },
+                    ),
+                    IconButton(
+                      icon: const FaIcon(FontAwesomeIcons.twitter, color: Colors.white),
+                      onPressed: () {
+                        // TODO: Implement Twitter Sign Up
+                      },
+                    ),
+                  ],
+                ),
+                // ... Other UI elements if any ...
               ],
             ),
           ),
