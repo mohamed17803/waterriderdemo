@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
       } on FirebaseAuthException catch (e) {
         // Display an error message if login fails and the widget is still mounted.
         if (navigator.mounted) {
-          String errorMessage = 'Wrong Password or Email Address. Try Again.';
+          String errorMessage = 'An error occurred';
           if (e.code == 'user-not-found' || e.code == 'wrong-password') {
             errorMessage = 'Wrong Password or Email Address. Try Again.';
           }
