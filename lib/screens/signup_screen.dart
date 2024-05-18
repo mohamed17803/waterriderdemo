@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// Here we do the Registration
+// Here we do the Registration !
 class SignUpScreen extends StatefulWidget {
   final VoidCallback? onSignUpComplete;
 
