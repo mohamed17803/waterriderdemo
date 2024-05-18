@@ -1,5 +1,3 @@
-
-
 // ignore: file_names
 // ignore_for_file: file_names, duplicate_ignore
 // This file contains the UI and logic for the user login screen.
@@ -42,8 +40,12 @@ class LoginScreen extends StatelessWidget {
       } on FirebaseAuthException catch (e) {
         // Display an error message if login fails and the widget is still mounted.
         if (navigator.mounted) {
+          String errorMessage = 'Wrong Password or Email Address. Try Again.';
+          if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+            errorMessage = 'Wrong Password or Email Address. Try Again.';
+          }
           ScaffoldMessenger.of(navigator.context).showSnackBar(
-            SnackBar(content: Text(e.message ?? 'An error occurred')),
+            SnackBar(content: Text(errorMessage, style: const TextStyle(color: Colors.red))),
           );
         }
       }
@@ -85,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 65.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pacifico',
-                          color: Colors.blueAccent,
+                          color: Color(0xFF00B4DA),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -131,72 +133,69 @@ class LoginScreen extends StatelessWidget {
                         ),
                         child: const Text('Login'),
                       ),
-                    const SizedBox(height: 40.0),
-                    // Social media login options
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.facebook,
-                            size: 45.0,
+                      const SizedBox(height: 40.0),
+                      // Social media login options
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          IconButton(
+                            icon: const FaIcon(
+                              FontAwesomeIcons.facebook,
+                              size: 45.0,
+                            ),
+                            color: Colors.blue,
+                            onPressed: () {
+                              // TODO: Implement Facebook login functionality
+                            },
                           ),
-                          color: Colors.blue,
-                          onPressed: () {
-                            // TODO: Implement Facebook login functionality
-                          },
-                        ),
-                        IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.google,
-                            size: 45.0,
+                          IconButton(
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                              size: 45.0,
+                            ),
+                            color: Colors.red,
+                            onPressed: () {
+                              // TODO: Implement Google login functionality
+                            },
                           ),
-                          color: Colors.red,
-                          onPressed: () {
-                            // TODO: Implement Google login functionality
-                          },
-                        ),
-                        IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.twitter,
-                            size: 45.0,
+                          IconButton(
+                            icon: const FaIcon(
+                              FontAwesomeIcons.twitter,
+                              size: 45.0,
+                            ),
+                            color: Colors.cyan,
+                            onPressed: () {
+                              // TODO: Implement Twitter login functionality
+                            },
                           ),
-                          color: Colors.cyan,
-                          onPressed: () {
-                            // TODO: Implement Twitter login functionality
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 40.0),
-                    const SizedBox(height: 80.0),
-                    // Sign up button
-                    TextButton(
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 43.0,
-                          fontFamily:"Pacifico",
-                          color: Colors.white,
-                          decoration: TextDecoration.underline,
-                          decorationThickness: 2,
-                          decorationColor: Colors.white,
-                        ),
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                        );
-                      },
-                    ),
-                  ],
+                      const SizedBox(height: 40.0),
+                      const SizedBox(height: 80.0),
+                      // Sign up button
+                      TextButton(
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 43.0,
+                            fontFamily: "Pacifico",
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          )],
-
+        ],
       ),
     );
   }
