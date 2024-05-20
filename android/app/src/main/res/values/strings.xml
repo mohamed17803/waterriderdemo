@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">waterriderdemo</string>
+    <string name="facebook_app_id">465028272572784</string>
+    <string name="fb_login_protocol_scheme">fb9eae76f1dbf6afd5faf2433119065ca2</string>
+
+
+
+</resources>

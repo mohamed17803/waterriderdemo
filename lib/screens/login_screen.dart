@@ -11,27 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   LoginScreen({super.key});
 
-  Future<void> _loginWithFacebook(BuildContext context) async {
-    final navigator = Navigator.of(context);
-    final LoginResult result = await FacebookAuth.instance.login();
-
-    if (result.status == LoginStatus.success) {
-      final facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-
-      if (navigator.mounted) {
-        navigator.pushReplacementNamed('/home');
-      }
-    } else {
-      if (navigator.mounted) {
-        ScaffoldMessenger.of(navigator.context).showSnackBar(
-          const SnackBar(content: Text('Facebook login failed', style: TextStyle(color: Colors.red))),
-        );
-      }
-    }
-  }
-
-  void _login(BuildContext context) async {
+  Future<void> _login(BuildContext context) async {
     final navigator = Navigator.of(context);
     if (_formKey.currentState!.validate()) {
       try {
@@ -52,6 +32,32 @@ class LoginScreen extends StatelessWidget {
             SnackBar(content: Text(errorMessage, style: const TextStyle(color: Colors.red))),
           );
         }
+      }
+    }
+  }
+
+  Future<void> _signInWithFacebook(BuildContext context) async {
+    final navigator = Navigator.of(context);
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+      final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+
+      if (navigator.mounted) {
+        navigator.pushReplacementNamed('/home');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (navigator.mounted) {
+        String errorMessage = 'An error occurred';
+        if (e.code == 'account-exists-with-different-credential') {
+          errorMessage = 'Account exists with different credentials';
+        } else if (e.code == 'invalid-credential') {
+          errorMessage = 'Invalid credentials';
+        }
+        ScaffoldMessenger.of(navigator.context).showSnackBar(
+          SnackBar(content: Text(errorMessage, style: const TextStyle(color: Colors.red))),
+        );
       }
     }
   }
@@ -151,7 +157,9 @@ class LoginScreen extends StatelessWidget {
                               size: 45.0,
                             ),
                             color: Colors.blue,
-                            onPressed: () => _loginWithFacebook(context),
+                            onPressed: () async {
+                              await _signInWithFacebook(context);
+                            },
                           ),
                           IconButton(
                             icon: const FaIcon(
