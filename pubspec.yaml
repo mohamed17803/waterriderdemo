@@ -41,6 +41,7 @@ dependencies:
   go_router: ^14.0.2
   firebase_core: ^2.31.0
   firebase_auth: ^4.19.5
+  flutter_facebook_auth: ^7.0.0
 
 
 
