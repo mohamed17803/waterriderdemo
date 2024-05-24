@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waterriderdemo/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -24,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         }
       } on FirebaseAuthException catch (e) {
         if (navigator.mounted) {
-          String errorMessage = 'An error occurred';
+          String errorMessage = 'Wrong Password or Email Address. Try Again';
           if (e.code == 'user-not-found' || e.code == 'wrong-password') {
             errorMessage = 'Wrong Password or Email Address. Try Again.';
           }
@@ -36,31 +35,6 @@ class LoginScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _signInWithFacebook(BuildContext context) async {
-    final navigator = Navigator.of(context);
-    try {
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-      final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
-
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-
-      if (navigator.mounted) {
-        navigator.pushReplacementNamed('/home');
-      }
-    } on FirebaseAuthException catch (e) {
-      if (navigator.mounted) {
-        String errorMessage = 'An error occurred';
-        if (e.code == 'account-exists-with-different-credential') {
-          errorMessage = 'Account exists with different credentials';
-        } else if (e.code == 'invalid-credential') {
-          errorMessage = 'Invalid credentials';
-        }
-        ScaffoldMessenger.of(navigator.context).showSnackBar(
-          SnackBar(content: Text(errorMessage, style: const TextStyle(color: Colors.red))),
-        );
-      }
-    }
-  }
 
   Widget _buildEmailField() {
     return TextFormField(
@@ -126,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       const Text(
-                        'Water Rider',
+                        'WATER RIDER',
                         style: TextStyle(
                           fontSize: 56.0,
                           fontWeight: FontWeight.bold,
@@ -157,9 +131,7 @@ class LoginScreen extends StatelessWidget {
                               size: 45.0,
                             ),
                             color: Colors.blue,
-                            onPressed: () async {
-                              await _signInWithFacebook(context);
-                            },
+                            onPressed: ()  {},
                           ),
                           IconButton(
                             icon: const FaIcon(
