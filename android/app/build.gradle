@@ -50,7 +50,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    implementation 'com.facebook.android:facebook-core:17.0.0'
-    implementation 'com.facebook.android:facebook-login:17.0.0'
-}
+dependencies {}
