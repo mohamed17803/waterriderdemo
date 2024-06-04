@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,19 +31,27 @@ class SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   // Function to handle the sign-up process
   void _onSignUp(BuildContext context) async {
     if (_formKey.currentState!.validate()) { // Validate the form fields
       try {
-        final email = _emailController.text.trim(); // Get the email from the controller
-        final password = _passwordController.text.trim(); // Get the password from the controller
-
+        // final email = _emailController.text.trim(); // Get the email from the controller
+        // final password = _passwordController.text.trim(); // Get the password from the controller
         // Create a new user with email and password
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ).then((value){
+          users.doc(FirebaseAuth.instance.currentUser?.uid).set({
+            'emailAddress': _emailController.text.trim(),
+            // 'firstName': firstName,
+            // 'lastName': lastName,
+            // 'password': password,
+            // 'nationalId': nationalId,
+            'uid': FirebaseAuth.instance.currentUser?.uid,
+          });
+        });
         // Navigate to the sign-up verification screen if sign up is successful
         if (context.mounted) {
           Navigator.pushReplacementNamed(context, '/signupVerification');
