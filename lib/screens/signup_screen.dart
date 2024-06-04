@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 // SignUpScreen is a stateful widget
 class SignUpScreen extends StatefulWidget {
@@ -19,7 +20,9 @@ class SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController(); // Controller for the password input
   final _confirmPasswordController = TextEditingController(); // Controller for the confirm password input
   final _phoneController = TextEditingController(); // Controller for the phone number input
-  DateTime? _dateOfBirth; // Variable to store the selected date of birth
+  final _dateController = TextEditingController(); // Controller for the phone number input
+  //DateTime? _dateOfBirth; // Variable to store the selected date of birth
+  String gender = '';
 
   @override
   void dispose() {
@@ -28,6 +31,7 @@ class SignUpScreenState extends State<SignUpScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _phoneController.dispose();
+    _dateController.dispose();
     super.dispose();
   }
 
@@ -42,15 +46,18 @@ class SignUpScreenState extends State<SignUpScreen> {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
-        ).then((value){
+        ).then((value) async {
           users.doc(FirebaseAuth.instance.currentUser?.uid).set({
             'emailAddress': _emailController.text.trim(),
-            // 'firstName': firstName,
-            // 'lastName': lastName,
-            // 'password': password,
-            // 'nationalId': nationalId,
+            'password': _passwordController.text,
+            'phone': _phoneController.text,
+            'gender': gender,
+            'birthday': _dateController.text,
             'uid': FirebaseAuth.instance.currentUser?.uid,
           });
+          if(!FirebaseAuth.instance.currentUser!.emailVerified){
+            await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+          }
         });
         // Navigate to the sign-up verification screen if sign up is successful
         if (context.mounted) {
@@ -68,19 +75,19 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   // Function to show the date picker and select the date of birth
-  Future<void> _selectDateOfBirth(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _dateOfBirth ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null && picked != _dateOfBirth) {
-      setState(() {
-        _dateOfBirth = picked; // Update the selected date of birth
-      });
-    }
-  }
+  // Future<void> _selectDateOfBirth(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: _dateOfBirth ?? DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
+  //   if (picked != null && picked != _dateOfBirth) {
+  //     setState(() {
+  //       _dateOfBirth = picked; // Update the selected date of birth
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +205,10 @@ class SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   value: null, // Default value
-                  onChanged: (String? newValue) {}, // Handle dropdown value change
+                  onChanged: (String? newValue) {
+                    gender = newValue!;
+                    print("gender = $gender");
+                  }, // Handle dropdown value change
                   items: <String>['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value, // Value of the dropdown item
@@ -223,15 +233,21 @@ class SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(8)), // Rounded corners
                     ),
                   ),
-                  controller: TextEditingController(
-                    text: _dateOfBirth != null ? '${_dateOfBirth!.toLocal()}'.split(' ')[0] : '',
-                  ), // Show the selected date of birth
+                  controller: _dateController, // Show the selected date of birth
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode()); // Remove focus from the text field
-                    _selectDateOfBirth(context); // Show the date picker
+                    showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.parse ('2100-10-20')
+                    ).then((value){
+                      _dateController.text = DateFormat.yMMMd().format(value!);
+                    });
+                    //_selectDateOfBirth(context); // Show the date picker
                   },
                   validator: (value) {
-                    if (_dateOfBirth == null) {
+                    if (_dateController.text.isEmpty) {
                       return 'Please select your date of birth'; // Validation message for unselected date of birth
                     }
                     return null;

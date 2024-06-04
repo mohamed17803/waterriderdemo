@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:waterriderdemo/screens/profile_screen.dart';
 import 'package:waterriderdemo/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'forget_password.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -19,7 +23,8 @@ class LoginScreen extends StatelessWidget {
           password: _passwordController.text.trim(),
         );
         if (navigator.mounted) {
-          navigator.pushReplacementNamed('/home');
+          // navigator.pushReplacementNamed('/home');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
         }
       } on FirebaseAuthException catch (e) {
         if (navigator.mounted) {
@@ -75,6 +80,15 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,);
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,6 +135,26 @@ class LoginScreen extends StatelessWidget {
                         ),
                         child: const Text('Login'),
                       ),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgetPasswordScreen()));
+                            },
+                            child: Text(
+                              'Forget Password?',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue.withOpacity(.7),
+                                color: Colors.blue.withOpacity(.7),
+                                fontSize: 16
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                       const SizedBox(height: 40.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -139,8 +173,8 @@ class LoginScreen extends StatelessWidget {
                               size: 45.0,
                             ),
                             color: Colors.red,
-                            onPressed: () {
-                              // TODO: Implement Google login functionality
+                            onPressed: () async {
+                              UserCredential cred = await signInWithGoogle();
                             },
                           ),
                           IconButton(
