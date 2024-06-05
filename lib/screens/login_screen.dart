@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:waterriderdemo/core/navigation_constants.dart';
+import 'package:waterriderdemo/screens/pre_home_screen.dart';
 import 'package:waterriderdemo/screens/profile_screen.dart';
 import 'package:waterriderdemo/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,8 +25,7 @@ class LoginScreen extends StatelessWidget {
           password: _passwordController.text.trim(),
         );
         if (navigator.mounted) {
-          // navigator.pushReplacementNamed('/home');
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+          navigateAndRemove(context, const PreHomeScreen());
         }
       } on FirebaseAuthException catch (e) {
         if (navigator.mounted) {
@@ -141,7 +142,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgetPasswordScreen()));
+                              navigateTo(context, const ForgetPasswordScreen());
                             },
                             child: Text(
                               'Forget Password?',
@@ -201,10 +202,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                          );
+                          navigateTo(context, const SignUpScreen());
                         },
                       ),
                     ],

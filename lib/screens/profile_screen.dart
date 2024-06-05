@@ -33,9 +33,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    setState(() {
-      getProfileData();
-    });
+    getProfileData();
     super.initState();
   }
 
@@ -50,6 +48,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         profileData = {};
         profileData = value.docs[0].data();
       }
+      setState(() {});
       print("alaa = ${profileData['emailAddress']}");
     }).catchError((error) {});
     return profileData;
@@ -62,6 +61,8 @@ class ProfileScreenState extends State<ProfileScreen> {
       'phone': phone,
       'gender': genderType,
       'birthday': birthday,
+    }).then((value){
+      setState(() {});
     });
   }
 

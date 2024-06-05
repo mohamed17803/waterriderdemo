@@ -1,39 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:waterriderdemo/core/navigation_constants.dart';
+import 'package:waterriderdemo/screens/passenger_screen.dart';
 
-class pre_home_screen extends StatelessWidget {
-  const pre_home_screen({super.key});
+class PreHomeScreen extends StatelessWidget {
+  const PreHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF00B4DA),
       appBar: AppBar(
-        title: const Text('Select User Type'),
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Select User Type',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500
+          ),
+        ),
+        centerTitle: true,
       ),
-      body: Container(
-        color: Colors.blue, // Blue background
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton.icon(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .8,
+              height: 48,
+              child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle passenger button tap
-                  Navigator.pushNamed(context, '/passenger');
+                  navigateTo(context, const PassengerScreen());
                 },
-                icon: const Icon(Icons.person, color: Colors.white),
-                label: const Text('Passenger', style: TextStyle(color: Colors.white)),
+                icon: const Icon(Icons.person, color: Colors.black),
+                label: const Text('Passenger', style: TextStyle(color: Colors.black)),
               ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
+            ),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .8,
+              height: 48,
+              child: ElevatedButton.icon(
                 onPressed: () {
-                  // Handle driver button tap
                   Navigator.pushNamed(context, '/driver');
                 },
-                icon: const Icon(Icons.directions_car, color: Colors.white),
-                label: const Text('Driver', style: TextStyle(color: Colors.white)),
+                icon: const Icon(Icons.directions_car, color: Colors.black),
+                label: const Text('Driver', style: TextStyle(color: Colors.black)),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
