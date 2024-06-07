@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async'; // Import async to use Timer
 import 'dart:math' as math;
+import 'cubit/location_cubit.dart';
 import 'login_screen.dart'; // Ensure this path is correct
 
 // Define the StatefulWidget for the splash screen
@@ -18,6 +20,17 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   // Declare an AnimationController for the rotation
   late AnimationController _controller;
 
+  static Future<bool> getLocation(BuildContext context,{bool determineToMap = false})async{
+    LocationCubit locationCubit = BlocProvider.of(context,listen: false);
+    bool? getLocation = await locationCubit.getGeoLocation(context,determineToMap: false );
+    if(getLocation == true){
+      print("truee");
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -26,11 +39,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       duration: const Duration(seconds: 4),
       vsync: this,
     )..forward(); // Start the animation forward only once
-
+    getLocation(context);
     // Set a timer to navigate to the LoginScreen after 5 seconds
     Timer(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
     });
+
   }
 
   @override

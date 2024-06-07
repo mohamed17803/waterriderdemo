@@ -12,7 +12,20 @@
           "package_name": "com.example.waterriderdemo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "628746497539-vehh79c0us85hg5bfo7n16d9dnsvr360.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.waterriderdemo",
+            "certificate_hash": "b11fce601e84a0d8250e239f12370780abb8e7b6"
+          }
+        },
+        {
+          "client_id": "628746497539-jqb5l1ldpoi9qd6m9trkeg8n4kb5oqo8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDV_a-7Nm9VKeyHApwXm3dbT58utUNxH9I"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628746497539-jqb5l1ldpoi9qd6m9trkeg8n4kb5oqo8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628746497539-ubtehd76a8f46u1c746q71c18920uo20.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.waterriderdemo"
+              }
+            }
+          ]
         }
       }
     }

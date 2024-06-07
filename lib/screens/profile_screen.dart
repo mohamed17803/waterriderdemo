@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:waterriderdemo/core/navigation_constants.dart';
+import 'package:waterriderdemo/screens/passenger_screen.dart';
 
 // SignUpScreen is a stateful widget
 class ProfileScreen extends StatefulWidget {
@@ -16,18 +19,18 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _dateController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   String gender = '';
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _phoneController.dispose();
-    _dateController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
+    dateController.dispose();
     super.dispose();
   }
 
@@ -48,31 +51,36 @@ class ProfileScreenState extends State<ProfileScreen> {
         profileData = {};
         profileData = value.docs[0].data();
       }
-      setState(() {});
+      setState(() {
+        emailController.text = profileData['emailAddress'] ?? "";
+        passwordController.text = profileData['password'] ?? "";
+        phoneController.text = profileData['phone'] ?? "";
+        dateController.text = profileData['birthday'] ?? "";
+        gender = profileData['gender'] ?? "Male";
+      });
       print("alaa = ${profileData['emailAddress']}");
     }).catchError((error) {});
     return profileData;
   }
 
   updateProfile({emailAddress, password, phone, genderType, birthday}){
-    users.doc(FirebaseAuth.instance.currentUser?.uid).set({
-      'emailAddress': emailAddress,
-      'password': password,
-      'phone': phone,
-      'gender': genderType,
-      'birthday': birthday,
-    }).then((value){
-      setState(() {});
+    FirebaseAuth.instance.currentUser?.updatePassword(password).then((value){
+      users.doc(FirebaseAuth.instance.currentUser?.uid).set({
+        'emailAddress': emailAddress,
+        'password': password,
+        'phone': phone,
+        'gender': genderType,
+        'birthday': birthday,
+      }).then((value){
+        setState(() {
+          navigateTo(context, const PassengerScreen());
+        });
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _emailController.text = profileData['emailAddress'] ?? "";
-    _passwordController.text = profileData['password'] ?? "";
-    _phoneController.text = profileData['phone'] ?? "";
-    _dateController.text = profileData['birthday'] ?? "";
-    gender = profileData['gender'] ?? "Male";
     return Scaffold(
       backgroundColor: const Color(0xFF00B4DA),
       appBar: AppBar(
@@ -97,7 +105,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 const SizedBox(height: 20,),
                 TextFormField(
-                  controller: _emailController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -117,7 +125,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  controller: _passwordController,
+                  controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     fillColor: Colors.white,
@@ -135,7 +143,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: phoneController,
                   decoration: const InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -186,7 +194,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                   ),
-                  controller: _dateController,
+                  controller: dateController,
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
                     showDatePicker(
@@ -195,11 +203,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                         firstDate: DateTime.now(),
                         lastDate: DateTime.parse ('2100-10-20')
                     ).then((value){
-                      _dateController.text = DateFormat.yMMMd().format(value!);
+                      dateController.text = DateFormat.yMMMd().format(value!);
                     });
                   },
                   validator: (value) {
-                    if (_dateController.text.isEmpty) {
+                    if (dateController.text.isEmpty) {
                       return 'Please select your date of birth';
                     }
                     return null;
@@ -219,10 +227,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () async {
                         if(_formKey.currentState!.validate() && gender != ""){
                           updateProfile(
-                              emailAddress: _emailController.text,
-                              password: _passwordController,
-                              phone: _phoneController.text,
-                              birthday: _dateController.text,
+                              emailAddress: emailController.text,
+                              password: passwordController.text,
+                              phone: phoneController.text,
+                              birthday: dateController.text,
                               genderType: gender
                           );
                         }
