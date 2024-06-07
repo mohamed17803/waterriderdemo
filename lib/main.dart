@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'package:waterriderdemo/screens/forget_password.dart';
+import 'screens/passenger_screen.dart';
 import 'package:waterriderdemo/screens/signupverification_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/splash_screen.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/signupVerification': (context) => const SignUpVerificationScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const PassengerScreen(),
+        '/forgetPassword': (context) => const ForgetPasswordScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/signup') {
