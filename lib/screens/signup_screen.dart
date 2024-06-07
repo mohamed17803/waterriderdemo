@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +20,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   final _confirmPasswordController = TextEditingController(); // Controller for the confirm password input
   final _phoneController = TextEditingController(); // Controller for the phone number input
   DateTime? _dateOfBirth; // Variable to store the selected date of birth
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  String gender = '';
 
   @override
   void dispose() {
@@ -36,13 +39,19 @@ class SignUpScreenState extends State<SignUpScreen> {
       try {
         final email = _emailController.text.trim(); // Get the email from the controller
         final password = _passwordController.text.trim(); // Get the password from the controller
-
         // Create a new user with email and password
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password,
-        );
-
+        ).then((value){
+          users.doc(FirebaseAuth.instance.currentUser?.uid).set({
+            'emailAddress': _emailController.text,
+            'password': _passwordController.text,
+            'phone': _phoneController.text,
+            'gender': gender,
+            'birthday': _dateOfBirth.toString(),
+          });
+        });
         // Navigate to the sign-up verification screen if sign up is successful
         if (context.mounted) {
           Navigator.pushReplacementNamed(context, '/signupVerification');
@@ -193,7 +202,10 @@ class SignUpScreenState extends State<SignUpScreen> {
                   items: <String>['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value, // Value of the dropdown item
-                      child: Text(value), // Display text
+                      child: Text(value),
+                      onTap: (){
+                        gender = value ;
+                      },// Display text
                     );
                   }).toList(),
                   validator: (value) {
