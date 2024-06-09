@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                       const Text(
                         'WATER RIDER',
                         style: TextStyle(
-                          fontSize: 56.0,
+                          fontSize: 50.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pacifico',
                           color: Color(0xFF00B4DA),
