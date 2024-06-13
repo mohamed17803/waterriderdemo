@@ -295,6 +295,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     markers = [];
     markers.add(
       Marker(
+        //location Detected
         icon: myLocationIcon!,
         markerId: const MarkerId('1'),
         position: LatLng(latLng.latitude , latLng.longitude),
