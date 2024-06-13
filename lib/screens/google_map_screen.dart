@@ -266,7 +266,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     );
 
   }
-
+// Scrum 93
   changeMarkerByTapping(LatLng latLng,) async
   {
     Map <String,double> locationData = Map();
