@@ -15,7 +15,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCuTilAfnGfkZtIx0T3qf-eOmWZ_N2LpoY"/>
         <activity
-            android:label="Water Riders"
+            android:label="WATERS RIDERS"
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
