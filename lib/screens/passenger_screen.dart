@@ -92,7 +92,7 @@ class _PassengerScreenState extends State<PassengerScreen> {
   }
 }
 
-
+//  trips
 List <TripDataModel> myTrips= [
   TripDataModel(
     location: "cairo",
